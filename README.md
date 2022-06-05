@@ -1,5 +1,3 @@
-#--------------------------------------------------------------------------------------------------
-
 # Foreword
 
 When I was working a few years ago, I was fortunate to join the project team led by Mr. Quan (bzquan), contacted, learned and practiced the BDD agile development method in the direction of C++.
@@ -22,8 +20,6 @@ Considering the versatility of the Linux platform, the original project has been
 1. Cancel the use of #define to define multilingual texts, and fall back to the first version of Unicode transcoding to ensure that only English characters are in the generated .h/.cpp files.
 2. In order to compile successfully under Linux system, several QT project files (.pro) and source files (.h/.cpp) have been modified.
 3. The feature files in all example projects are regenerated with the latest tools, compiled and run through.
-
-#--------------------------------------------------------------------------------------------------
 
 # Cucumber/C++
 Cucumber/C++ is an editor of Cucumber/Gherkin, a language of specification by example in the BDD world.
