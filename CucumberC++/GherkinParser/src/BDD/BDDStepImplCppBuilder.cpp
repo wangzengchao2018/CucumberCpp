@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,6 +61,11 @@ wstring BDDStepImplCppBuilder::BuildStepImps()
 wstring BDDStepImplCppBuilder::MakeStepComments(BDDStepBuilder& stepBuilder)
 {
     wstring comments;
+
+    comments
+        .append(L"// List of steps that match this function:")
+        .append(BDDUtil::NEW_LINE);
+
     for (wstring str : stepBuilder.StepComments())
     {
         comments

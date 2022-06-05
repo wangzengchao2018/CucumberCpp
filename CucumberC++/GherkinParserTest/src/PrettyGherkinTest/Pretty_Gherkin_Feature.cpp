@@ -1,5 +1,6 @@
-﻿/* The MIT License (MIT)
+/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang 
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +30,6 @@
 
 #include "FeatureTestModel.h"
 #include "Pretty_Gherkin_Steps.h"
-
-
-// Pretty_Gherkin_Feature
 
 class Pretty_Gherkin_Feature : public FeatureTestModel
 {
@@ -65,7 +63,8 @@ private:
     Pretty_Gherkin_Steps steps;
 };
 
-TEST_F(Pretty_Gherkin_Feature, GUIDなしのGherkin)
+// TEST_F(Pretty_Gherkin_Feature, GUIDなしのGherkin)
+TEST_F(Pretty_Gherkin_Feature, GUIDu12394uuu12375uuu12398uuGherkin)
 {
     Spec("@guid-09204ed5-1af8-472c-8f3f-3b564c2a3aae");
 
@@ -86,7 +85,8 @@ TEST_F(Pretty_Gherkin_Feature, GUIDなしのGherkin)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, GUIDありのGherkin)
+// TEST_F(Pretty_Gherkin_Feature, GUIDありのGherkin)
+TEST_F(Pretty_Gherkin_Feature, GUIDu12354uuu12426uuu12398uuGherkin)
 {
     Spec("@guid-25558861-e8c0-46df-bca2-2b5c524791be");
 
@@ -108,7 +108,8 @@ TEST_F(Pretty_Gherkin_Feature, GUIDありのGherkin)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, FeatureのTag)
+// TEST_F(Pretty_Gherkin_Feature, FeatureのTag)
+TEST_F(Pretty_Gherkin_Feature, Featureu12398uuTag)
 {
     Spec("@guid-d4f6d044-762b-4714-9aa4-f12935cf8ced");
 
@@ -132,7 +133,8 @@ TEST_F(Pretty_Gherkin_Feature, FeatureのTag)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, FeatureのBackground)
+// TEST_F(Pretty_Gherkin_Feature, FeatureのBackground)
+TEST_F(Pretty_Gherkin_Feature, Featureu12398uuBackground)
 {
     Spec("@guid-4e299a51-b12c-412c-bf38-8f54c60207cb");
 
@@ -164,7 +166,8 @@ TEST_F(Pretty_Gherkin_Feature, FeatureのBackground)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, ScenarioのTagは最後尾に)
+// TEST_F(Pretty_Gherkin_Feature, ScenarioのTagは最後尾に)
+TEST_F(Pretty_Gherkin_Feature, Scenariou12398uuTagu12399uuu26368uuu24460uuu23614uuu12395uu)
 {
     Spec("@guid-d5e16284-9fdb-4db0-bbe5-f01e3bac9558");
 
@@ -188,7 +191,8 @@ TEST_F(Pretty_Gherkin_Feature, ScenarioのTagは最後尾に)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, 複数のScenario)
+// TEST_F(Pretty_Gherkin_Feature, 複数のScenario)
+TEST_F(Pretty_Gherkin_Feature, u35079uuu25968uuu12398uuScenario)
 {
     Spec("@guid-dd9cce71-75cb-4375-84db-abf98ee5d1b3");
 
@@ -283,7 +287,8 @@ TEST_F(Pretty_Gherkin_Feature, Table_argument)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, 規則性なしのTable_argument)
+// TEST_F(Pretty_Gherkin_Feature, 規則性なしのTable_argument)
+TEST_F(Pretty_Gherkin_Feature, u35215uuu21063uuu24615uuu12394uuu12375uuu12398uuTable_argument)
 {
     Spec("@guid-adbfcca8-6ca6-4f78-8511-6032fa9f7473");
 
@@ -310,7 +315,8 @@ TEST_F(Pretty_Gherkin_Feature, 規則性なしのTable_argument)
     ExecuteTest();
 }
 
-TEST_F(Pretty_Gherkin_Feature, CommentありのGherkin)
+// TEST_F(Pretty_Gherkin_Feature, CommentありのGherkin)
+TEST_F(Pretty_Gherkin_Feature, Commentu12354uuu12426uuu12398uuGherkin)
 {
     Spec("@guid-2f7ad31c-346e-4fde-bf8e-c14b1b449580");
 

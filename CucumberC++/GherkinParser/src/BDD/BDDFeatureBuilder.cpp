@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +27,6 @@
 #include "BDDScenarioBuilder.h"
 #include "BDDScenarioOutlineBuilder.h"
 #include "BDDStepBuilder.h"
-#include "BDDFeatureBuilderContext.h"
 #include "BDDFeatureBuilder.h"
 
 using namespace std;
@@ -50,22 +50,15 @@ wstring BDDFeatureBuilder::FeatureFileName()
 
 wstring BDDFeatureBuilder::Build()
 {
-    BDDFeatureBuilderContext context;
-    context.Clear();
-
-    wstring featureTestClass = BuildFeatureTestClass();
-    wstring scenarioes = BuildScenarioes();
-
     m_featureImpl.clear();
     m_featureImpl
         .append(DisableWarning_C4819())
         .append(BDDUtil::NEW_LINE)
         .append(BuildIncludes())
         .append(BDDUtil::NEW_LINE)
-        .append(context.GetUnicodeNameDefines())
-        .append(featureTestClass)
+        .append(BuildFeatureTestClass())
         .append(BDDUtil::NEW_LINE)
-        .append(scenarioes)
+        .append(BuildScenarioes())
         .append(BDDUtil::NEW_LINE);
 
 
@@ -133,21 +126,23 @@ wstring BDDFeatureBuilder::BuildIncludes()
     wstring includes;
     includes
         .append(L"#include \"FeatureTestModel.h\"\n")
-        .append(L"#include \"" + StepHeaderFileName() + L"\"\n")
-        .append(BDDUtil::NEW_LINE);
+        .append(L"#include \"" + StepHeaderFileName() + L"\"\n");
 
     return includes;
 }
 
 wstring BDDFeatureBuilder::BuildFeatureTestClass()
 {
-    BDDFeatureBuilderContext context;
-    context.AppendName(FeatureClassName());
-
     wstring testClass;
+
+    if (BDDUtil::NeedUnicodeComment(FeatureClassName()))
+    {
+        testClass
+            .append(L"// " + wstring(L"class ") + FeatureClassName() + L" : public FeatureTestModel\n");
+    }
+
     testClass
-        .append(BDDUtil::NEW_LINE)
-        .append(wstring(L"class ") + FeatureClassName() + L" : public FeatureTestModel\n")
+        .append(wstring(L"class ") + BDDUtil::to_ident(FeatureClassName()) + L" : public FeatureTestModel\n")
         .append(L"{\n")
         .append(BuildSetupAndTearDown())
         .append(BDDUtil::NEW_LINE)
@@ -217,8 +212,16 @@ wstring BDDFeatureBuilder::BuildStepMemberVar()
 {
     wstring stepMemberVar;
     stepMemberVar
-        .append(L"private:\n")
-        .append(BDDUtil::INDENT + m_StepClassName + L" steps;");
+        .append(L"private:\n");
+    if (BDDUtil::NeedUnicodeComment(m_StepClassName))
+    {
+        stepMemberVar
+            .append(BDDUtil::INDENT + L"// " + m_StepClassName + L" steps;")
+            .append(BDDUtil::NEW_LINE);
+    }
+
+    stepMemberVar
+        .append(BDDUtil::INDENT + BDDUtil::to_ident(m_StepClassName) + L" steps;");
 
     return stepMemberVar;
 }

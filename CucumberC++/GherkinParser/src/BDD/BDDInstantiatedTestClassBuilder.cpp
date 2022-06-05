@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +25,6 @@
 #include "TableRow.h"
 #include "BDDUtil.h"
 #include "BDDGherkinTableBuilder.h"
-#include "BDDFeatureBuilderContext.h"
 #include "BDDInstantiatedTestClassBuilder.h"
 
 using namespace std;
@@ -39,10 +39,7 @@ void BDDInstantiatedTestClassBuilder::StartToBuild(wstring featureClassName, wst
 
 wstring BDDInstantiatedTestClassBuilder::Build(Example& example)
 {
-    BDDFeatureBuilderContext context;
-
     wstring instantiationName = m_FeatureClassName + L"_" + std::to_wstring(m_InstanceNo);
-    context.AppendName(instantiationName);
 
     m_InstanceNo++;
 
@@ -52,8 +49,6 @@ wstring BDDInstantiatedTestClassBuilder::Build(Example& example)
         .append(L"_")
         .append(std::to_wstring(m_InstanceNo))
         .append(L"_ExampleTable");
-
-    context.AppendName(exampleTableName);
 
     wstring instantiatedTestClass;
     instantiatedTestClass
@@ -67,17 +62,51 @@ wstring BDDInstantiatedTestClassBuilder::Build(Example& example)
 std::wstring BDDInstantiatedTestClassBuilder::InstantiatedTestClass(std::wstring instantiationName, std::wstring exampleTableName)
 {
     wstring instantiatedTestClass;
+
     instantiatedTestClass
-        .append(L"INSTANTIATE_TEST_CASE_PP(\n")
+        .append(L"INSTANTIATE_TEST_CASE_P(\n");
+
+    if (BDDUtil::NeedUnicodeComment(instantiationName))
+    {
+        instantiatedTestClass
+            .append(BDDUtil::INDENT_DOUBLE)
+            .append(wstring(L"// ") + instantiationName)
+            .append(L",")
+            .append(BDDUtil::NEW_LINE);
+    }
+
+    instantiatedTestClass
         .append(BDDUtil::INDENT_DOUBLE)
-        .append(instantiationName)
-        .append(L",\n")
+        .append(BDDUtil::to_ident(instantiationName))
+        .append(L",")
+        .append(BDDUtil::NEW_LINE);
+
+    if (BDDUtil::NeedUnicodeComment(m_ScenarioOutlineClassName))
+    {
+        instantiatedTestClass
+            .append(BDDUtil::INDENT_DOUBLE)
+            .append(wstring(L"// ") + m_ScenarioOutlineClassName)
+            .append(L",\n");
+    }
+
+    instantiatedTestClass
         .append(BDDUtil::INDENT_DOUBLE)
-        .append(m_ScenarioOutlineClassName)
-        .append(L",\n")
+        .append(BDDUtil::to_ident(m_ScenarioOutlineClassName))
+        .append(L",\n");
+
+    if (BDDUtil::NeedUnicodeComment(exampleTableName))
+    {
+        instantiatedTestClass
+            .append(BDDUtil::INDENT_DOUBLE)
+            .append(wstring(L"// ") + L"testing::ValuesIn(")
+            .append(exampleTableName + L".Rows()));")
+            .append(BDDUtil::NEW_LINE);
+    }
+
+    instantiatedTestClass
         .append(BDDUtil::INDENT_DOUBLE)
         .append(L"testing::ValuesIn(")
-        .append(exampleTableName + L".Rows()));")
+        .append(BDDUtil::to_ident(exampleTableName) + L".Rows()));")
         .append(BDDUtil::NEW_LINE);
 
     return instantiatedTestClass;

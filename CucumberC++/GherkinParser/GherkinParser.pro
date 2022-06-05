@@ -4,14 +4,20 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
-QT      += core
+QT -= core gui
+QT += core
 TARGET = GherkinParser
 TEMPLATE = lib
 CONFIG += staticlib
 CONFIG += c++14
 
 CXXFLAGS += -Wno-write-strings
+
+# enable under Windows
+#DEFINES += WIN32
+
+# enable under Linux
+DEFINES += QT
 
 INCLUDEPATH += $$PWD/src
 INCLUDEPATH += $$PWD/src/Ast
@@ -59,9 +65,7 @@ SOURCES += \
     src/PrettyGherkin/PrettyTableRowFormatter.cpp \
     src/util/guid.cpp \
     src/util/StrUtility.cpp \
-    src/Ast/IHasSteps.cpp \
-    src/BDD/BDDFeatureBuilderContext.cpp \
-    src/BDD/BDDUnicodeNameDefinitions.cpp
+    src/Ast/IHasSteps.cpp
 
 HEADERS += \
     src/AstBuilder.h \
@@ -123,16 +127,17 @@ HEADERS += \
     src/PrettyGherkin/PrettyTableRow.h \
     src/PrettyGherkin/PrettyTableRowFormatter.h \
     src/util/guid.h \
-    src/util/StrUtility.h \
-    src/BDD/BDDFeatureBuilderContext.h \
-    src/BDD/BDDUnicodeNameDefinitions.h
+    src/util/StrUtility.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-INCLUDEPATH += "C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"
-INCLUDEPATH += "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
+# enable under Windows
+#INCLUDEPATH += "C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"
+#INCLUDEPATH += "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
 
-LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x86"
-LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x86"
+# enable under Windows
+#LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x86"
+#LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x86"

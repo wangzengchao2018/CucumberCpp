@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +41,6 @@ wstring BDDStepImplHeaderBuilder::BuildStepImplHeader()
     stepImplHeader
         .append(include)
         .append(BDDUtil::NEW_LINE)
-        .append(BDDStepImplBuilderContext::GetUnicodeNameDefines())
         .append(classBeginning)
         .append(BDDUtil::NEW_LINE)
         .append(stepDefs)
@@ -75,11 +75,17 @@ wstring BDDStepImplHeaderBuilder::BuildIncludes()
 wstring BDDStepImplHeaderBuilder::BuildClassBeginning()
 {
     wstring stepClassName = BDDStepImplBuilderContext::StepImplClassName();
-    BDDStepImplBuilderContext::AppendName(stepClassName);
 
     wstring beginning;
+
+    if (BDDUtil::NeedUnicodeComment(stepClassName))
+    {
+        beginning
+            .append(L"// " + wstring(L"class ") + stepClassName + L" : public AbstractStepModel\n");
+    }
+
     beginning
-        .append(wstring(L"class ") + stepClassName + L" : public AbstractStepModel\n")
+        .append(wstring(L"class ") + BDDUtil::to_ident(stepClassName) + L" : public AbstractStepModel\n")
         .append(L"{\n")
         .append(L"public:\n")
         .append(BDDUtil::INDENT + L"void SetUp()\n")
@@ -146,8 +152,16 @@ wstring BDDStepImplHeaderBuilder::BuildClassEnding()
 {
     wstring ending;
     ending
-        .append(L"private:\n")
-        .append(BDDUtil::INDENT + BDDStepImplBuilderContext::FeatureTestModelName() + L" model;\n")
+        .append(L"private:\n");
+
+    if (BDDUtil::NeedUnicodeComment(BDDStepImplBuilderContext::FeatureTestModelName()))
+    {
+        ending
+            .append(BDDUtil::INDENT + L"// " + BDDStepImplBuilderContext::FeatureTestModelName() + L" model;\n");
+    }
+
+    ending
+        .append(BDDUtil::INDENT + BDDUtil::to_ident(BDDStepImplBuilderContext::FeatureTestModelName()) + L" model;\n")
         .append(L"};\n");
 
     return ending;

@@ -1,5 +1,6 @@
 /* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,4 +35,5 @@ public:
     static std::wstring getDirFromFilepathWS (const QString& path);
     static QString getDirFromFilepath (const QString& path);
     static QString fileMine2FilePath(QString path_mime);
+    static QString currentDateTime();
 };

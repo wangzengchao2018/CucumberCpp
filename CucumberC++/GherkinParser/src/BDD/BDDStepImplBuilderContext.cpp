@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang 
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +32,6 @@ using namespace CucumberCpp;
 vector<BDDStepBuilder*> BDDStepImplBuilderContext::s_StepBuilderList;
 vector<BDDStepBuilder*> BDDStepImplBuilderContext::s_NonDuplicateStepBuilderList;
 wstring BDDStepImplBuilderContext::s_FeatureTitle;
-BDDUnicodeNameDefinitions BDDStepImplBuilderContext::s_UnicodeNameDefinitions;
 
 void BDDStepImplBuilderContext::Clear()
 {
@@ -42,7 +42,6 @@ void BDDStepImplBuilderContext::Clear()
     s_StepBuilderList.clear();
     s_NonDuplicateStepBuilderList.clear();
     s_FeatureTitle = wstring();
-    s_UnicodeNameDefinitions.Clear();
 }
 
 vector<BDDStepBuilder*>& BDDStepImplBuilderContext::StepBuilders()
@@ -101,16 +100,6 @@ vector<BDDStepBuilder*>& BDDStepImplBuilderContext::NonDuplicateStepBuilders()
 {
     MakeNonDuplicateStepBuilders();
     return s_NonDuplicateStepBuilderList;
-}
-
-void BDDStepImplBuilderContext::AppendName(std::wstring name)
-{
-    s_UnicodeNameDefinitions.Append(name);
-}
-
-std::wstring BDDStepImplBuilderContext::GetUnicodeNameDefines()
-{
-    return s_UnicodeNameDefinitions.GetDefines();
 }
 
 void BDDStepImplBuilderContext::MakeNonDuplicateStepBuilders()

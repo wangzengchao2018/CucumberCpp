@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +24,6 @@
 #include "Scenario.h"
 #include "BDDUtil.h"
 #include "BDDStepBuilder.h"
-#include "BDDFeatureBuilderContext.h"
 #include "BDDScenarioBuilder.h"
 
 using namespace std;
@@ -37,12 +37,16 @@ BDDScenarioBuilder::BDDScenarioBuilder(Scenario& scenario) :
 
 wstring BDDScenarioBuilder::BuildScenarioImpl()
 {
-    BDDFeatureBuilderContext context;
-    context.AppendName(ScenarioName());
-
     wstring scenarioImpl;
+
+    if (BDDUtil::NeedUnicodeComment(ScenarioName()))
+    {
+        scenarioImpl
+            .append(wstring(L"// TEST_F(") + FeatureClassName() + L", " + ScenarioName() + L")\n");
+    }
+
     scenarioImpl
-        .append(wstring(L"TEST_FF(") + FeatureClassName() + L", " + ScenarioName() + L")\n")
+        .append(wstring(L"TEST_F(") + BDDUtil::to_ident(FeatureClassName()) + L", " + BDDUtil::to_ident(ScenarioName()) + L")\n")
         .append(L"{\n")
         .append(BDDUtil::INDENT + BuildGUIDTag())
         .append(BDDUtil::NEW_LINE)

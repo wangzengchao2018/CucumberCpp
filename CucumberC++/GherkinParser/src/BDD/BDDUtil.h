@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,6 +72,8 @@ namespace CucumberCpp
         static std::wstring ToCPPwstringLiteral(const std::wstring& str);
         static void WriteFileAsUTF8WithBOM(std::wstring filepath, std::wstring contents);
         static std::wstring to_ident(std::wstring name);
+        static bool SameAsIdent(std::wstring name);
+        static bool NeedUnicodeComment(std::wstring name);
         static std::wstring to_symbol(std::wstring ident);
         static bool supportUnicode() { return s_supportUnicode; }
         static void supportUnicode(bool flag) { s_supportUnicode = flag; }

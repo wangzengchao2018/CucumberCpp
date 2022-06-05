@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +26,6 @@
 #include "BDDUtil.h"
 #include "BDDInstantiatedTestClassBuilder.h"
 #include "BDDStepBuilder.h"
-#include "BDDFeatureBuilderContext.h"
 #include "BDDScenarioOutlineBuilder.h"
 
 using namespace std;
@@ -34,15 +34,15 @@ using namespace CucumberCpp;
 
 wstring BDDScenarioOutlineBuilder::BuildScenarioImpl()
 {
-    wstring scenarioOutlineIml;
-    scenarioOutlineIml
+    wstring scenarioOutlineImpl;
+    scenarioOutlineImpl
         .append(BuildParameterizedTestClass())
         .append(BDDUtil::NEW_LINE)
         .append(BuildTestBody())
         .append(BDDUtil::NEW_LINE)
         .append(BuildInstantiatedTestClassBuildTestCases());
 
-    return scenarioOutlineIml;
+    return scenarioOutlineImpl;
 }
 
 void BDDScenarioOutlineBuilder::AddExamples(Example& example)
@@ -57,13 +57,25 @@ wstring BDDScenarioOutlineBuilder::ScenarioOutlineClassName()
 
 wstring BDDScenarioOutlineBuilder::BuildParameterizedTestClass()
 {
-    BDDFeatureBuilderContext context;
-    context.AppendName(ScenarioOutlineClassName());
-
     wstring scenarioOutlineClass;
+
+    if (BDDUtil::NeedUnicodeComment(ScenarioOutlineClassName()))
+    {
+        scenarioOutlineClass
+            .append(wstring(L"// ") + wstring(L"class ") + ScenarioOutlineClassName() + L" :\n");
+    }
+
     scenarioOutlineClass
-        .append(wstring(L"class ") + ScenarioOutlineClassName() + L" :\n")
-        .append(BDDUtil::INDENT + L"public " + FeatureClassName() + L",\n")
+        .append(wstring(L"class ") + BDDUtil::to_ident(ScenarioOutlineClassName()) + L" :\n");
+
+    if (BDDUtil::NeedUnicodeComment(FeatureClassName()))
+    {
+        scenarioOutlineClass
+            .append(BDDUtil::INDENT + wstring(L"// ") + L"public " + FeatureClassName() + L",\n");
+    }
+
+    scenarioOutlineClass
+        .append(BDDUtil::INDENT + L"public " + BDDUtil::to_ident(FeatureClassName()) + L",\n")
         .append(BDDUtil::INDENT + L"public WithParamInterface<GherkinRow>\n")
         .append(L"{\n")
         .append(L"public:\n")
@@ -76,8 +88,14 @@ wstring BDDScenarioOutlineBuilder::BuildParameterizedTestClass()
 wstring BDDScenarioOutlineBuilder::BuildTestBody()
 {
     wstring scenarioOutlineTestBody;
+    if (BDDUtil::NeedUnicodeComment(ScenarioOutlineClassName()))
+    {
+        scenarioOutlineTestBody
+            .append(wstring(L"// TEST_P(") + ScenarioOutlineClassName() + L", ScenarioOutline)\n");
+    }
+
     scenarioOutlineTestBody
-        .append(wstring(L"TEST_PP(") + ScenarioOutlineClassName() + L", ScenarioOutline)\n")
+        .append(wstring(L"TEST_P(") + BDDUtil::to_ident(ScenarioOutlineClassName()) + L", ScenarioOutline)\n")
         .append(L"{\n")
         .append(BDDUtil::INDENT + L"GherkinRow param = GetParam();\n")
         .append(BDDUtil::NEW_LINE)
@@ -106,8 +124,16 @@ wstring BDDScenarioOutlineBuilder::BuildSetupFunction()
     wstring setupFunction;
     setupFunction
         .append(BDDUtil::INDENT + L"void SetUp() override\n")
-        .append(BDDUtil::INDENT + L"{\n")
-        .append(BDDUtil::INDENT_DOUBLE + FeatureClassName() + L"::SetUp();\n")
+        .append(BDDUtil::INDENT + L"{\n");
+
+    if (BDDUtil::NeedUnicodeComment(FeatureClassName()))
+    {
+        setupFunction
+            .append(BDDUtil::INDENT_DOUBLE + wstring(L"// ") + FeatureClassName() + L"::SetUp();\n");
+    }
+
+    setupFunction
+        .append(BDDUtil::INDENT_DOUBLE + BDDUtil::to_ident(FeatureClassName()) + L"::SetUp();\n")
         .append(BDDUtil::INDENT_DOUBLE + BuildGUIDTag())
         .append(BDDUtil::NEW_LINE)
         .append(BDDUtil::INDENT + L"}\n");

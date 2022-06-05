@@ -1,5 +1,6 @@
-﻿/* The MIT License (MIT)
+/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +22,14 @@
  */
 
 #ifdef WIN32
+// Disable warning C4819: The file contains a character that cannot be represented in the current code page
+#pragma warning(disable : 4819)
 // Disable warning C4800: 'int' : forcing value to bool 'true' or 'false'(performance warning)
 #pragma warning(disable : 4800)
 #endif
 
 #include "FeatureTestModel.h"
 #include "Gherkin_Compiler_Steps.h"
-
-
-// Gherkin_Compiler_Feature
 
 class Gherkin_Compiler_Feature : public FeatureTestModel
 {
@@ -62,7 +62,6 @@ protected:
     }
 
 private:
-    // Gherkin_Compiler_Steps steps;
     Gherkin_Compiler_Steps steps;
 };
 
@@ -72,11 +71,10 @@ TEST_F(Gherkin_Compiler_Feature, u12486uuu12540uuu12502uuu12523uuu24341uuu25968u
     Spec("@guid-e3aed304-c496-46d2-ae6b-e85c01414359");
 
 
-    GherkinTable table0;
-    table0
-    //            |Col1|Col2 |Col3|
-        .AddRow(L"|IBM |25   |USD |")
-        .AddRow(L"|Sony|1,500|JPY |");
+    GherkinTable table0(
+            L"|Col1|Col2 |三列目|\n"
+            L"|IBM |25   |USD   |\n"
+            L"|Sony|1,500|JPY   |");
     Given(L"本Stepは下記テーブルを引数とする", table0);
     When(L"Featureをコンパイルする");
     Then(L"Stepの正規表現は\"本Stepは下記テーブルを引数とする\"である");
@@ -90,9 +88,8 @@ TEST_F(Gherkin_Compiler_Feature, doc_stringu25991uuu23383uuu21015uuu24341uuu2596
     Spec("@guid-e7960b64-23ab-40c9-aea5-0d41f61ca06e");
 
 
-    std::wstring docString0 = L"文字列-Doc String1"
-                              L"\n"
-                              L"文字列-Doc String2";
+    std::wstring docString0 = L"    文字列-Doc String1\n"
+                              L"    文字列-Doc String2";
     Given(L"下記はdoc string文字列である。", docString0);
     When(L"Featureをコンパイルする");
     Then(L"Stepの正規表現は\"下記はdoc string文字列である。\"である");
@@ -112,7 +109,7 @@ TEST_F(Gherkin_Compiler_Feature, u25968uuu23383uuu24341uuu25968uuu12398uuStep)
     ExecuteTest();
 }
 
-// Gherkin_Compiler_Feature_テーブル行引数のStep : Gherkin_Compiler_Feature
+// class Gherkin_Compiler_Feature_テーブル行引数のStep :
 class Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uuu25968uuu12398uuStep :
     public Gherkin_Compiler_Feature,
     public WithParamInterface<GherkinRow>
@@ -120,7 +117,6 @@ class Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uuu
 public:
     void SetUp() override
     {
-//         Gherkin_Compiler_Feature::SetUp();
         Gherkin_Compiler_Feature::SetUp();
         Spec("@guid-ee132945-0ba8-457c-bf60-68070edcba95");
     }
@@ -138,18 +134,18 @@ TEST_P(Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uu
     ExecuteTest();
 }
 
-// Gherkin_Compiler_Feature_0
+// GherkinTable Gherkin_Compiler_Feature_テーブル行引数のStep_1_ExampleTable(
+GherkinTable Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uuu25968uuu12398uuStep_1_ExampleTable(
+        L"|param1|param2|Sum|\n"
+        L"|3     |3     |6  |\n"
+        L"|3     |5     |8  |");
+
 INSTANTIATE_TEST_CASE_P(
         Gherkin_Compiler_Feature_0,
-// Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uuu25968uuu12398uuStep
+        // Gherkin_Compiler_Feature_テーブル行引数のStep,
         Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uuu25968uuu12398uuStep,
-        Values(//      |param1|param2|Sum|
-// GherkinRow
-          GherkinRow(L"|3     |3     |6  |"),
-// GherkinRow
-          GherkinRow(L"|3     |5     |8  |")
-        ));
-
+        // testing::ValuesIn(Gherkin_Compiler_Feature_テーブル行引数のStep_1_ExampleTable.Rows()));
+        testing::ValuesIn(Gherkin_Compiler_Feature_u12486uuu12540uuu12502uuu12523uuu34892uuu24341uuu25968uuu12398uuStep_1_ExampleTable.Rows()));
 
 // TEST_F(Gherkin_Compiler_Feature, 数字と文字列混在の引数)
 TEST_F(Gherkin_Compiler_Feature, u25968uuu23383uuu12392uuu25991uuu23383uuu21015uuu28151uuu22312uuu12398uuu24341uuu25968uu)

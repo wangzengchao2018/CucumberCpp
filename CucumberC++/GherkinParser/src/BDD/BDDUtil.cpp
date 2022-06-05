@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +24,22 @@
 #include <regex>
 #include <fstream>
 #include <locale>
+
 #ifdef WIN32
 #include <codecvt>
 #endif
+
 #include <exception>
 #include <algorithm>
 #include "StrUtility.h"
 #include "BDDUtil.h"
 
-//#define QT
-//#ifdef QT
+#ifdef QT
 #include <QString>
 #include <QFile>
 #include <QTextStream>
 #include <QIODevice>
-//#endif
+#endif
 
 using namespace std;
 using namespace CucumberCpp;
@@ -159,11 +161,12 @@ void BDDUtil::WriteFileAsUTF8WithBOM(std::wstring filepath, std::wstring content
 {
 #ifdef WIN32
     WriteFileAsUTF8WithBOMWin32(filepath, contents);
-#else    // Qt
+#else // Qt
     WriteFileAsUTF8WithBOMQt(filepath, contents);
 #endif
 }
 
+#ifdef WIN32
 void BDDUtil::WriteFileAsUTF8WithBOMWin32(std::wstring filepath, std::wstring contents)
 {
     // 1 BOM : Open file in ANSI mode and add BOM to the start of a file
@@ -188,7 +191,7 @@ void BDDUtil::WriteFileAsUTF8WithBOMWin32(std::wstring filepath, std::wstring co
     file << contents;
     file.close();
 }
-
+#else // Qt
 void BDDUtil::WriteFileAsUTF8WithBOMQt(std::wstring filepath, std::wstring contents)
 {
     QString q_filepath = QString::fromStdWString(filepath);
@@ -205,6 +208,7 @@ void BDDUtil::WriteFileAsUTF8WithBOMQt(std::wstring filepath, std::wstring conte
     out << text;
     file.close();
 }
+#endif
 
 wstring BDDUtil::to_wstring(wchar_t ch)
 {
@@ -234,6 +238,16 @@ wstring BDDUtil::to_ident(wstring name)
     }
 
     return ident;
+}
+
+bool BDDUtil::SameAsIdent(std::wstring name)
+{
+    return name == to_ident(name);
+}
+
+bool BDDUtil::NeedUnicodeComment(std::wstring name)
+{
+    return !supportUnicode() && !SameAsIdent(name);
 }
 
 wstring BDDUtil::to_symbol(wstring ident)

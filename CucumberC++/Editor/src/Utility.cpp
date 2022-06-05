@@ -1,5 +1,6 @@
 /* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +24,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QLocale>
+#include <QDateTime>
 #include "StrUtility.h"
 #include "Utility.h"
 
@@ -59,3 +62,12 @@ QString Utility::fileMine2FilePath(QString path_mime)
 
     return QString::fromStdWString(path);
 }
+
+QString Utility::currentDateTime()
+{
+    QLocale locale = QLocale::English;
+    return locale.toString(QDateTime::currentDateTime(), "yyyy-MM-dd hh:mm:ss.zzz");
+}
+
+
+

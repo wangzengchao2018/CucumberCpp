@@ -9,6 +9,12 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
+# enable under Windows
+#DEFINES += WIN32
+
+# enable under Linux
+DEFINES += QT
+
 SOURCES += \
     src/BDDTest.cpp \
     src/BDDUtilTest.cpp \
@@ -48,14 +54,16 @@ HEADERS += \
     src/PrettyGherkinTest/Pretty_Gherkin_Steps.h \
     src/PrettyGherkinTest/Pretty_Gherkin_TestModel.h
 
-INCLUDEPATH += "C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"
-INCLUDEPATH += "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
+# enable under Windows
+#INCLUDEPATH += "C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt"
+#INCLUDEPATH += "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
 
-LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x86"
-LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x86"
+# enable under Windows
+#LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\um\x86"
+#LIBS += -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10240.0\ucrt\x86"
 
 INCLUDEPATH += $$PWD/gmock-1.7.0-lib/include
-win32: LIBS += -L$$PWD/gmock-1.7.0-lib/lib/ -lgmock
+LIBS += -L$$PWD/gmock-1.7.0-lib/lib/ -lgmock
 
 INCLUDEPATH += $$PWD/TestCaseModel
 
@@ -65,13 +73,24 @@ INCLUDEPATH += $$PWD/../GherkinParser/src/BDD
 INCLUDEPATH += $$PWD/../GherkinParser/src/PrettyGherkin
 INCLUDEPATH += $$PWD/../GherkinParser/src/util
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../GherkinParser/output/release/ -lGherkinParser
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../GherkinParser/output/debug/ -lGherkinParser
+# enable under Windows
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../GherkinParser/output/release/ -lGherkinParser
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../GherkinParser/output/debug/ -lGherkinParser
 
-INCLUDEPATH += $$PWD/../GherkinParser/output/debug
-DEPENDPATH += $$PWD/../GherkinParser/output/debug
+# enable under Windows
+#INCLUDEPATH += $$PWD/../GherkinParser/output/debug
+#DEPENDPATH += $$PWD/../GherkinParser/output/debug
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/release/libGherkinParser.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/debug/libGherkinParser.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/release/GherkinParser.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/debug/GherkinParser.lib
+# enable under Windows
+#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/release/libGherkinParser.a
+#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/debug/libGherkinParser.a
+#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/release/GherkinParser.lib
+#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/debug/GherkinParser.lib
+
+# enable under Linux
+unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../GherkinParser/output/release/ -lGherkinParser
+else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../GherkinParser/output/debug/ -lGherkinParser
+
+# enable under Linux
+unix-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/release/libGherkinParser.a
+else:unix-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../GherkinParser/output/debug/libGherkinParser.a

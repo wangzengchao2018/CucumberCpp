@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,8 +54,16 @@ std::wstring BDDGherkinTableBuilder::BuildTableVariable(DataTable& dataTable, st
 std::wstring BDDGherkinTableBuilder::AppendGherkinTableDefinition(std::wstring& tableVariableName, std::wstring indent)
 {
     std::wstring tableDef;
+
+    if (BDDUtil::NeedUnicodeComment(tableVariableName))
+    {
+        tableDef
+            .append(indent + wstring(L"// ") + L"GherkinTable " + tableVariableName + L"(")
+            .append(BDDUtil::NEW_LINE);
+    }
+
     tableDef
-        .append(indent + L"GherkinTable " + tableVariableName + L"(")
+        .append(indent + L"GherkinTable " + BDDUtil::to_ident(tableVariableName) + L"(")
         .append(BDDUtil::NEW_LINE);
 
     return tableDef;

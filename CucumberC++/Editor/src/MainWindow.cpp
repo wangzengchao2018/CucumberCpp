@@ -1,5 +1,6 @@
 ﻿/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,9 +52,10 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->splitter->setStretchFactor(0, 90);
-    ui->splitter->setStretchFactor(1, 10);
+    ui->splitter->setStretchFactor(0, 80);
+    ui->splitter->setStretchFactor(1, 20);
 
+    setWindowIcon(QIcon(":/CucumberCpp.ico"));
     setAcceptDrops(true);
 
     m_pEditor = ui->gherkinTextEdit;
@@ -218,7 +220,7 @@ bool MainWindow::canCompile()
 
 void MainWindow::prettyGherkin()
 {
-    QString msg("------------------\nStart formatting Gherkin...\n");
+    QString msg("------------------\n" + Utility::currentDateTime() + "\nStart formatting Gherkin...\n");
     std::wstring gherkin = preparingPrettyGherkin(msg);
 
     GherkinIF parser;
@@ -299,7 +301,8 @@ void MainWindow::genExecutableSpec()
 void MainWindow::genExecutableSpec4SavedFeature()
 {
     showCompileInfo();
-    QString msg("------------------\nStart generating executable specification...\n");
+
+    QString msg("------------------\n" + Utility::currentDateTime() + "\nStart generating executable specification...\n");
     std::wstring gherkin = preparingPrettyGherkin(msg);
 
     GherkinIF parser;

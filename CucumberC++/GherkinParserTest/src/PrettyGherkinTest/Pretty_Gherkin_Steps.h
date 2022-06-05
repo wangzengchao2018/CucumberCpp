@@ -1,5 +1,6 @@
-﻿/* The MIT License (MIT)
+/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,13 +53,13 @@ public:
     }
 
 public:
-        // 下記Gherkin文がある
+    // void 下記Gherkin文がある(std::wstring);
     void u19979uuu35352uuGherkinu25991uuu12364uuu12354uuu12427uu(std::wstring);
-        // Gherkin文を整形する
+    // void Gherkin文を整形する();
     void Gherkinu25991uuu12434uuu25972uuu24418uuu12377uuu12427uu();
-        // 整形後のScenarioにGUIDが追加されること
+    // void 整形後のScenarioにGUIDが追加されること();
     void u25972uuu24418uuu24460uuu12398uuScenariou12395uuGUIDu12364uuu36861uuu21152uuu12373uuu12428uuu12427uuu12371uuu12392uu();
-        // 整形後のGherkin文は下記である
+    // void 整形後のGherkin文は下記である(std::wstring);
     void u25972uuu24418uuu24460uuu12398uuGherkinu25991uuu12399uuu19979uuu35352uuu12391uuu12354uuu12427uu(std::wstring);
 
 public:

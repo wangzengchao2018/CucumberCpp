@@ -15,5 +15,6 @@
         <file>edit_undo.png</file>
         <file>w.ico</file>
         <file>edit_font.png</file>
+        <file>CucumberCpp.ico</file>
     </qresource>
 </RCC>

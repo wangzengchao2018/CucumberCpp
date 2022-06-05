@@ -1,5 +1,6 @@
-﻿/* The MIT License (MIT)
+/* The MIT License (MIT)
  * 
+ * Copyright (c) 2022 Zengchao Wang
  * Copyright (c) 2016 Bingzhe Quan
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,27 +53,27 @@ public:
     }
 
 public:
-        // Step定義headerは_S_である
+    // void Step定義headerは_S_である(std::wstring);
     void Stepu23450uuu32681uuheaderu12399uu_S_u12391uuu12354uuu12427uu(std::wstring);
-        // Step定義Cppは_S_である
+    // void Step定義Cppは_S_である(std::wstring);
     void Stepu23450uuu32681uuCppu12399uu_S_u12391uuu12354uuu12427uu(std::wstring);
-        // 本Stepは下記テーブルを引数とする
+    // void 本Stepは下記テーブルを引数とする(GherkinTable&);
     void u26412uuStepu12399uuu19979uuu35352uuu12486uuu12540uuu12502uuu12523uuu12434uuu24341uuu25968uuu12392uuu12377uuu12427uu(GherkinTable&);
-        // Featureをコンパイルする
+    // void Featureをコンパイルする();
     void Featureu12434uuu12467uuu12531uuu12497uuu12452uuu12523uuu12377uuu12427uu();
-        // Stepの正規表現は_S_である
+    // void Stepの正規表現は_S_である(std::wstring);
     void Stepu12398uuu27491uuu35215uuu34920uuu29694uuu12399uu_S_u12391uuu12354uuu12427uu(std::wstring);
-        // Stepは_S_である
+    // void Stepは_S_である(std::wstring);
     void Stepu12399uu_S_u12391uuu12354uuu12427uu(std::wstring);
-        // 下記はdoc_string文字列である
+    // void 下記はdoc_string文字列である(std::wstring);
     void u19979uuu35352uuu12399uudoc_stringu25991uuu23383uuu21015uuu12391uuu12354uuu12427uu(std::wstring);
-        // _D_と_D_を引数とする
+    // void _D_と_D_を引数とする(double, double);
     void _D_u12392uu_D_u12434uuu24341uuu25968uuu12392uuu12377uuu12427uu(double, double);
-        // param1とparam2はテーブル列を示す
+    // void param1とparam2はテーブル列を示す(GherkinRow&);
     void param1u12392uuparam2u12399uuu12486uuu12540uuu12502uuu12523uuu21015uuu12434uuu31034uuu12377uu(GherkinRow&);
-        // 数字_D_数字_D_と_S_の三つの引数がある
+    // void 数字_D_数字_D_と_S_の三つの引数がある(double, double, std::wstring);
     void u25968uuu23383uu_D_u25968uuu23383uu_D_u12392uu_S_u12398uuu19977uuu12388uuu12398uuu24341uuu25968uuu12364uuu12354uuu12427uu(double, double, std::wstring);
-        // 括弧を含む文内容内容内容
+    // void 括弧を含む文内容内容内容();
     void u25324uuu24359uuu12434uuu21547uuu12416uuu25991uuu20869uuu23481uuu20869uuu23481uuu20869uuu23481uu();
 
 public:
